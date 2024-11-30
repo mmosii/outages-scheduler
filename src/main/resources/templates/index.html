@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Графік відключень</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Графік відключень електроенергії</h1>
+<p th:text="${message}"></p>
+<form action="/trigger-update" method="post">
+    <button type="submit">Оновити дані</button>
+</form>
+
+<h2>Відключення на даний момент</h2>
+
+<div id="outages-container" th:if="${outages}">
+    <div th:each="entry : ${outages}">
+        <h3>
+            <span th:text="${entry.key}"></span>
+            <span th:if="${entry.key == 'Група 3.1. Жидачів.'}">
+                <a href="https://calendar.google.com/calendar/u/0?cid=MGY5NGVkYTAyMzc0MTFiNjgxN2U0NmRiMjhiMGZlMWZhNTY0NThlZjE1Y2JhNTVmMjFkMTA4NmM2NzFlZWJjOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank">Посилання на календар</a>
+            </span>
+            <span th:if="${entry.key == 'Група 3.2. Станиля.'}">
+                <a href="https://calendar.google.com/calendar/u/0?cid=YzA0MWVjOWRlNDdhMmFmMWM5NDQ4MzUzNTcyNGY5MDcyNDFmMWY0MWQ4YWU2YjI5MzUwMzQ2MmYzZGUwY2YyZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank">Посилання на календар</a>
+            </span>
+        </h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Початок</th>
+                <th>Кінець</th>
+                <th>Опис</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event : ${entry.value}">
+                <td th:text="${event.start}"></td>
+                <td th:text="${event.end}"></td>
+                <td th:text="${event.description}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:if="${error}">
+    <p style="color: red;" th:text="${error}"></p>
+</div>
+
+</body>
+</html>
