@@ -27,7 +27,7 @@ public class ScheduleUpdateService {
 
     private final Logger logger = LogManager.getLogger(ScheduleUpdateService.class);
 
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void updateCalendars() {
         this.logger.info("Оновлення графіків розпочато о " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
         try {
