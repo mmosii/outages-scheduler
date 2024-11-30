@@ -23,10 +23,10 @@ public class ImageUrlCollector {
     private static final WebDriver driver;
 
     static {
-        WebDriverManager.edgedriver().setup();  // Use Edge WebDriver
+        WebDriverManager.edgedriver().setup();
         EdgeOptions options = new EdgeOptions();
-        options.addArguments("--headless");  // Add headless option for Edge
-        driver = new EdgeDriver(options);  // Initialize EdgeDriver
+        options.addArguments("--headless");
+        driver = new EdgeDriver(options);
     }
 
     public List<String> getImageUrls(String pageUrl) {
