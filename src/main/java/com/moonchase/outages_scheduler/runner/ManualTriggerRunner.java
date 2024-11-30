@@ -12,7 +12,7 @@ public class ManualTriggerRunner implements CommandLineRunner {
     private ScheduleUpdateService scheduleUpdateService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (args.length > 0 && "update-calendars".equalsIgnoreCase(args[0])) {
             scheduleUpdateService.triggerManualUpdate();
         }

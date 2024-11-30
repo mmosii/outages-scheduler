@@ -25,7 +25,7 @@ public class OCRProcessor {
 
     private final Logger logger = LogManager.getLogger(OCRProcessor.class);
 
-    public List<String> processImageFromURL(String baseUrl) throws Exception {
+    public List<String> processImageFromURL(String baseUrl) {
         List<String> results = new ArrayList<>();
         for (String imageUrl : this.imageUrlCollector.getImageUrls(baseUrl)) {
             try (InputStream input = new URL(imageUrl).openStream()) {
