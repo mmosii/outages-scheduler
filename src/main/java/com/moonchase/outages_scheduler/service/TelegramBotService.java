@@ -1,6 +1,7 @@
 package com.moonchase.outages_scheduler.service;
 
 import com.moonchase.outages_scheduler.util.EventHelper;
+import jakarta.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,9 +33,45 @@ public class TelegramBotService extends TelegramLongPollingBot {
 
     private final String botToken = "replaceitwithactualtokenplease";
     private final String botUsername = "dudewhereismycar_bot";
-
+    private final String userFilePath = "userChatMap.txt";
 
     private final ConcurrentHashMap<String, String> userChatMap = new ConcurrentHashMap<>();
+
+    @PreDestroy
+    public void onShutdown() {
+        saveUserData();
+        this.logger.info("Програма закривається. Дані про користувачів збережено.");
+    }
+
+    public TelegramBotService() {
+        loadUserData();
+    }
+
+    public void saveUserData() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(userFilePath))) {
+            for (String chatId : userChatMap.keySet()) {
+                writer.write(chatId + "\n");
+            }
+            this.logger.info("Дані про користувачів збережено");
+        } catch (IOException e) {
+            this.logger.error("Помилка при збереженні даних про користувачів " + e.getMessage());
+        }
+    }
+
+    public void loadUserData() {
+        File file = new File(userFilePath);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(userFilePath))) {
+                String chatId;
+                while ((chatId = reader.readLine()) != null) {
+                    userChatMap.put(chatId, chatId);
+                }
+                this.logger.info("Попередні користувачі завантажені");
+            } catch (IOException e) {
+                this.logger.error("Помилка при завантаженні користувачів " + e.getMessage());
+            }
+        }
+    }
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -73,6 +110,11 @@ public class TelegramBotService extends TelegramLongPollingBot {
                     sendMessage(chatId, scheduleTwo);
                     break;
 
+                case "Вимкнути сповіщення":
+                    userChatMap.remove(chatId);
+                    sendMessage(chatId, "Сповіщення вимкнено.");
+                    break;
+
                 default:
                     sendMessage(chatId, "Команду не розпізнано. Використовуйте меню.");
                     break;
@@ -92,6 +134,7 @@ public class TelegramBotService extends TelegramLongPollingBot {
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
         row.add(new KeyboardButton("Активувати сповіщення"));
+        row.add(new KeyboardButton("Вимкнути сповіщення"));
         row.add(new KeyboardButton("Жидачів 3.1"));
         row.add(new KeyboardButton("Станиля 3.2"));
         keyboard.add(row);

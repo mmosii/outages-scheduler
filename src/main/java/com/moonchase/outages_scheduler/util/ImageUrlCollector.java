@@ -1,6 +1,7 @@
 package com.moonchase.outages_scheduler.util;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import jakarta.annotation.PreDestroy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -27,6 +28,12 @@ public class ImageUrlCollector {
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--headless");
         driver = new EdgeDriver(options);
+    }
+
+    @PreDestroy
+    public void closeDriver() {
+        driver.quit();
+        this.logger.info("Вебдрайвер вимкнено");
     }
 
     public List<String> getImageUrls(String pageUrl) {
