@@ -14,7 +14,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.RescaleOp;
-import java.io.IOException;
 
 @Component
 public class ImageEnhancer {
@@ -27,7 +26,7 @@ public class ImageEnhancer {
         nu.pattern.OpenCV.loadLocally();
     }
 
-    public BufferedImage enhanceImage(BufferedImage image, String fileURL) throws IOException {
+    public BufferedImage enhanceImage(BufferedImage image, String fileURL) throws Exception {
         this.logger.info("Початок покращення зображення " + fileURL);
         Mat src = Imgcodecs.imread(preprocessImage(image, fileURL), Imgcodecs.IMREAD_GRAYSCALE);
         Imgproc.resize(src, src, new Size(src.width() * 2, src.height() * 2), 0, 0, Imgproc.INTER_CUBIC);
@@ -39,7 +38,7 @@ public class ImageEnhancer {
         return matToBufferedImage(src);
     }
 
-    private String preprocessImage(BufferedImage image, String fileURL) throws IOException {
+    private String preprocessImage(BufferedImage image, String fileURL) throws Exception {
         BufferedImage grayscale = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         Graphics2D g2d = grayscale.createGraphics();
         g2d.drawImage(image, 0, 0, null);

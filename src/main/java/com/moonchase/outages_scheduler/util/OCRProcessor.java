@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class OCRProcessor {
                 } catch (TesseractException e) {
                     this.logger.error("OCR зображення " + imageUrl + " не вдалось. " + e.getMessage());
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 this.logger.error("Не вдалось отримати зображення з " + imageUrl + e.getMessage());
             }
         }
