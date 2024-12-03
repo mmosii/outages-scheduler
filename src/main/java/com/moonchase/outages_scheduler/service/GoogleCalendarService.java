@@ -49,7 +49,7 @@ public class GoogleCalendarService {
             String creationDateTime = LocalDateTime.now().format(formatter);
 
             Event event = new Event()
-                    .setSummary("Темно в " + group)
+                    .setSummary("Темрява поглинула " + group)
                     .setDescription("Заплановано виключення електроенергії " + startTime.format(DateTimeFormatter.ofPattern("dd:MM")) +
                             " о " + startTime.getHour() + " годині. Дані оновлено: " + creationDateTime)
                     .setStart(new EventDateTime().setDateTime(startDateTime).setTimeZone(localZone.getId()))

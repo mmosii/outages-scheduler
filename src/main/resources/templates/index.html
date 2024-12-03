@@ -32,12 +32,6 @@
     <div th:each="entry : ${outages}">
         <h3>
             <span th:text="${entry.key}"></span>
-            <span th:if="${entry.key == 'Група 3.1. Жидачів.'}">
-                <a href="https://calendar.google.com/calendar/u/0?cid=MGY5NGVkYTAyMzc0MTFiNjgxN2U0NmRiMjhiMGZlMWZhNTY0NThlZjE1Y2JhNTVmMjFkMTA4NmM2NzFlZWJjOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank">Посилання на календар</a>
-            </span>
-            <span th:if="${entry.key == 'Група 3.2. Станиля.'}">
-                <a href="https://calendar.google.com/calendar/u/0?cid=YzA0MWVjOWRlNDdhMmFmMWM5NDQ4MzUzNTcyNGY5MDcyNDFmMWY0MWQ4YWU2YjI5MzUwMzQ2MmYzZGUwY2YyZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank">Посилання на календар</a>
-            </span>
         </h3>
         <table>
             <thead>

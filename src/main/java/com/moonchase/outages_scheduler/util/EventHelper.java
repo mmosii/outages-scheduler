@@ -24,6 +24,22 @@ public class EventHelper {
     @Autowired
     private GoogleCalendarService googleCalendarService;
 
+    public List<EventDTO> getOneOneEvents() throws IOException {
+        return getEvents("ce4733f00e0b293cf8c59b87c6f049c30c2e39c7f3b682862165d9a31aaa8622@group.calendar.google.com", "1.1");
+    }
+
+    public List<EventDTO> getOneTwoEvents() throws IOException {
+        return getEvents("ece05f5cf981f00fb6c62c135ce12c0c44a856883ea927392ce2c4d1ac142411@group.calendar.google.com", "1.2");
+    }
+
+    public List<EventDTO> getTwoOneEvents() throws IOException {
+        return getEvents("81023f51f71667bf7f41fa9d721575b628c3607cb6e4b9863ee5d2474c04fc4d@group.calendar.google.com", "2.1");
+    }
+
+    public List<EventDTO> getTwoTwoEvents() throws IOException {
+        return getEvents("d3021868c14416b5cd4e34bfcee29b490a5f79dc9828ee710a385d486ae22b5b@group.calendar.google.com", "2.2");
+    }
+
     public List<EventDTO> getThreeOneEvents() throws IOException {
         return getEvents("c041ec9de47a2af1c94483535724f907241f1f41d8ae6b293503462f3de0cf2f@group.calendar.google.com", "3.1");
     }
